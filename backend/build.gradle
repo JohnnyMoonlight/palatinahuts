@@ -1,0 +1,65 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'idea'
+    id 'com.github.node-gradle.node' version '3.2.1'
+}
+
+group = 'io.tobias'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+ext {
+	frontendBuildDir = '${project.projectDir}/../../frontend/dist'
+	backendPublicDir = '/src/main/resources/public'
+}
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.google.code.gson:gson:2.9.0'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.hibernate:hibernate-core:5.6.5.Final'
+	implementation 'org.postgresql:postgresql:42.2.24'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.apache.commons:commons-lang3:3.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+task buildFrontend(type: NpmTask) {
+	dependsOn 'npmInstall'
+	args = ['run-script', 'build']
+}
+
+task copyFrontend(type: Copy) {
+	group = 'build'
+	dependsOn 'buildFrontend'
+	println 'copy from ' + file(frontendBuildDir).getAbsolutePath() + ' to ' + file(backendPublicDir).getAbsolutePath()
+	from (frontendBuildDir)
+	into (backendPublicDir)
+}
+
+task cleanDirectories(type: Delete) {
+	delete file(frontendBuildDir)
+}
+
+node {        
+    // The Node.js project directory location
+    // This is where the package.json file and node_modules directory are located
+    // By default it is at the root of the current project
+    nodeProjectDir = file("${project.projectDir}/../frontend")
+}
+
+tasks.named('build') {
+	doLast {
+		'cleanDirectories'
+	}
+}
