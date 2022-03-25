@@ -37,22 +37,21 @@ public class HutController {
     @PostMapping("/hut")
     public ResponseEntity<HttpResponse> createHut(@RequestParam("hut") String string, @RequestParam(value = "image", required = false) MultipartFile[] images) {
         Gson gson = new GsonBuilder().serializeNulls().create();
-        HttpResponse response;
-        String responseString = "";
+        StringBuilder responseString = new StringBuilder();
+        //Default status is bad request.
         HttpStatus status = HttpStatus.BAD_REQUEST;
         Hut hut = null;
         try {
             hut = gson.fromJson(string, Hut.class);
             if (!hut.isValid()) {
-                responseString = "Hut is not valid!";
-                status = HttpStatus.BAD_REQUEST;
+                responseString.append("Hut is not valid.");
             }
             else if (!hutNotExistsInDatabase(hut)) {
-                responseString = "Hut already exists in database";
-                status = HttpStatus.BAD_REQUEST;
+                responseString.append("Hut already exists in database.");
             }
             else {
                 final Hut savedHut = repository.save(hut);
+                responseString.append("Hut created");
                 status = HttpStatus.CREATED;
                 imageService.createImageDirectoryForHut(hut);
                 if (images != null && images.length > 0) {
@@ -62,16 +61,17 @@ public class HutController {
                             repository.save(savedHut);
                         }
                         catch (Exception e) {
-                            responseString = e.getMessage();
+                            responseString.append(e.getMessage());
                         }
                     }
                 }
             }
         }
         catch (Exception e) {
-            responseString = e.getMessage();
+            responseString.append(e.getMessage());
+            e.printStackTrace();
         }
-        return new ResponseEntity<HttpResponse>(new HttpResponse(responseString, hut), status);
+        return new ResponseEntity<HttpResponse>(new HttpResponse(responseString.toString(), hut), status);
 
     }
 

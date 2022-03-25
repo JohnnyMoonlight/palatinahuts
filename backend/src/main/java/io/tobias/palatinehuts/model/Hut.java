@@ -21,6 +21,7 @@ public class Hut {
     @GeneratedValue
     UUID id;
     String name;
+
     String place;
     double latitude;
     double longitude;

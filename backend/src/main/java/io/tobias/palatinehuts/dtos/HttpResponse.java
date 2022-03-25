@@ -9,7 +9,7 @@ import com.google.gson.JsonParser;
 public class HttpResponse {
 
     String message;
-    JsonElement object;
+    Object object;
     private HttpResponse() {
         this.object = null;
     }
@@ -18,7 +18,7 @@ public class HttpResponse {
         this();
         this.message = message;
         if(object != null) {
-            this.object = new Gson().toJsonTree(object);
+            this.object = object;
         }
     }
 
@@ -33,12 +33,12 @@ public class HttpResponse {
     }
 
 
-    public JsonElement getObject() {
+    public Object getObject() {
         return object;
     }
 
 
-    public void setObject(JsonElement object) {
+    public void setObject(Object object) {
         this.object = object;
     }
 
