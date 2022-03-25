@@ -21,6 +21,7 @@
             longitude="7.892475186106314"
             zoomLevel="9"
             style="width: 100%"
+            setPinOnClick="true"
           ></HutMap
         ></v-col> </v-row
       ><v-row
@@ -83,25 +84,24 @@
             :disabled="isInvalid"
             >Speichern</v-btn
           ></v-col
-        >
-        <v-col lg="3"> <v-btn color="error">Verwerfen</v-btn></v-col>
+        ><v-col lg="3">
+          <v-snackbar v-model="ui.snackbar">
+            {{ ui.message }}
+
+            <template v-slot:action="{ attrs }">
+              <v-btn
+                :color="ui.color"
+                text
+                v-bind="attrs"
+                @click="ui.snackbar = false"
+              >
+                Close
+              </v-btn>
+            </template>
+          </v-snackbar>
+        </v-col>
       </v-row>
     </v-form>
-    <div>{{ isInvalid }}</div>
-    <v-snackbar v-model="ui.snackbar">
-      {{ ui.message }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          :color="ui.color"
-          text
-          v-bind="attrs"
-          @click="ui.snackbar = false"
-        >
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
   </v-container>
 </template>
 <style>
@@ -161,7 +161,8 @@ export default {
         this.diameter,
         this.playground,
         this.latitude,
-        this.longitude
+        this.longitude,
+        true
       );
     },
     async saveHut() {

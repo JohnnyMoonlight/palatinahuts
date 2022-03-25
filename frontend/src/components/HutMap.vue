@@ -15,20 +15,31 @@ export default {
     "latitude",
     "longitude",
     "zoomLevel",
-    "clickCallbackFunction",
+    "markersForMap",
     "setPinOnClick",
   ],
   data: () => ({
     geojson: geojson,
     map: null,
-    marker: null,
     icon: null,
+    marker: null,
     //
   }),
   methods: {
     emitEvent(e) {
+      console.log("map clicked in Hut Map");
       this.$emit("mapclicked", e.latlng);
     },
+    addMarkerToMap(marker) {
+      marker.addTo(this.map);
+    },
+  },
+  watch: {
+    /*
+    markersForMap: function (val) {
+      console.log(this.val);
+      this.addMarkerToMap({ lat: val.latitude, lon: val.longitude });
+    },*/
   },
   created() {},
   mounted() {
@@ -41,13 +52,17 @@ export default {
       [this.latitude, this.longitude],
       this.zoomLevel
     );
-    this.map.on("click", (e) => {
-      this.emitEvent(e);
-      if (this.marker) {
-        this.map.removeLayer(this.marker);
-      }
-      this.marker = L.marker(e.latlng, { icon: this.icon }).addTo(this.map);
-    });
+    if (this.setPinOnClick) {
+      this.map.on("click", (e) => {
+        this.emitEvent(e);
+        if (this.marker) {
+          this.map.removeLayer(this.marker);
+        }
+        this.marker = L.marker(e.latlng, { icon: this.icon });
+        this.addMarkerToMap(this.marker);
+      });
+    }
+
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',

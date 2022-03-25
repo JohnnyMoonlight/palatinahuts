@@ -1,5 +1,5 @@
 export default class Hut {
-    constructor(name, price, place, diameter, playground, latitude, longitude) {
+    constructor(name, price, place, diameter, playground, latitude, longitude, active) {
         this.name = name;
         this.price = price;
         this.place = place;
@@ -7,5 +7,6 @@ export default class Hut {
         this.playground = playground;
         this.latidude = latitude;
         this.longitude = longitude;
+        this.active = active;
     }
 }
