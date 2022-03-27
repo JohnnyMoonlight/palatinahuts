@@ -4,7 +4,6 @@
 <style scoped>
 </style>
 <script>
-import API from "@/api/api";
 import "leaflet/dist/leaflet.css";
 
 import L from "leaflet";
@@ -18,13 +17,13 @@ export default {
     "zoomLevel",
     "markersForMap",
     "setPinOnClick",
+    "huts",
   ],
   data: () => ({
     geojson: geojson,
     map: null,
     icon: null,
     marker: null,
-    huts: [],
     //
   }),
   methods: {
@@ -36,13 +35,15 @@ export default {
     },
   },
   created() {},
-  mounted() {
-    API.getHuts().then((result) => {
-      this.huts = result;
+  watch: {
+    huts: function (newVal, oldVal) {
+      console.log("Prop changed: ", newVal, " | was: ", oldVal);
       for (let m of this.huts) {
         L.marker({ lat: m.latitude, lon: m.longitude }).addTo(this.map);
       }
-    });
+    },
+  },
+  mounted() {
     this.icon = L.icon({
       iconUrl: require("/node_modules/leaflet/dist/images/marker-icon.png"),
       iconSize: [26, 40],

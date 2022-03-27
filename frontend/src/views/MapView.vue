@@ -6,7 +6,7 @@
       longitude="7.892475186106314"
       zoomLevel="10"
       setPinOnClick="false"
-      :markersForMap="huts"
+      :huts="huts"
     ></HutMap>
   </div>
 </template>
@@ -27,20 +27,15 @@ import API from "@/api/api";
 export default {
   data: function () {
     return {
-      huts: [],
+      huts: "",
     };
   },
   components: {
     HutMap,
   },
-  methods: {
-    async getHuts() {
-      API.getHuts().then((result) => (this.huts = result));
-    },
-  },
+  methods: {},
   mounted() {
-    this.getHuts();
-    console.log(this.huts);
+    API.getHuts().then((result) => (this.huts = result));
   },
 };
 </script>
