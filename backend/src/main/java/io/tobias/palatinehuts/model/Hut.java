@@ -1,8 +1,6 @@
 package io.tobias.palatinehuts.model;
-import io.tobias.palatinehuts.json.ImageSerializer;
 import io.tobias.palatinehuts.model.generic.Image;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import javax.persistence.Entity;
@@ -16,7 +14,6 @@ import java.util.UUID;
 
 @Entity
 public class Hut {
-
     @Id
     @GeneratedValue
     UUID id;
@@ -29,9 +26,36 @@ public class Hut {
     @OneToMany
     @Cascade(CascadeType.ALL)
     List<Image> images = new ArrayList<>();
-    double price;
-    double diameter;
+    double  price;
+    double  diameter;
     boolean active;
+    boolean playground;
+
+
+    public Hut() {
+
+    }
+    public Hut(UUID id, String name, String place, double latitude, double longitude, String primaryImage, List<Image> images, double price, double diameter) {
+        this.id = id;
+        this.name = name;
+        this.place = place;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.primaryImage = primaryImage;
+        this.images = images;
+        this.price = price;
+        this.diameter = diameter;
+    }
+
+
+    public boolean isPlayground() {
+        return playground;
+    }
+
+
+    public void setPlayground(boolean playground) {
+        this.playground = playground;
+    }
 
 
     public boolean isActive() {
@@ -41,11 +65,6 @@ public class Hut {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-
-    public Hut() {
-
     }
 
 
@@ -139,21 +158,7 @@ public class Hut {
     }
 
 
-    public Hut(UUID id, String name, String place, double latitude, double longitude, String primaryImage, List<Image> images, double price, double diameter) {
-        this.id = id;
-        this.name = name;
-        this.place = place;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.primaryImage = primaryImage;
-        this.images = images;
-        this.price = price;
-        this.diameter = diameter;
-    }
-
     public boolean isValid() {
-        if(this.name == null || place == null) {
-            return false;
-        } else return true;
+        return this.name != null && place != null;
     }
 }
