@@ -29,7 +29,6 @@ export default {
   }),
   methods: {
     emitEvent(e) {
-      console.log("map clicked in Hut Map");
       this.$emit("mapclicked", e.latlng);
     },
     addMarkerToMap(marker) {
@@ -39,7 +38,6 @@ export default {
   created() {},
   mounted() {
     API.getHuts().then((result) => {
-      console.log(result);
       this.huts = result;
       for (let m of this.huts) {
         L.marker({ lat: m.latitude, lon: m.longitude }).addTo(this.map);
@@ -54,8 +52,6 @@ export default {
       [this.latitude, this.longitude],
       this.zoomLevel
     );
-    console.log(this.setPinOnClick);
-
     if (this.setPinOnClick == "true") {
       this.map.on("click", (e) => {
         this.emitEvent(e);
