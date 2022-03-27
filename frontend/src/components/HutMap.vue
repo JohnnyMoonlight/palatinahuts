@@ -4,6 +4,7 @@
 <style scoped>
 </style>
 <script>
+import API from "@/api/api";
 import "leaflet/dist/leaflet.css";
 
 import L from "leaflet";
@@ -23,6 +24,7 @@ export default {
     map: null,
     icon: null,
     marker: null,
+    huts: [],
     //
   }),
   methods: {
@@ -34,15 +36,15 @@ export default {
       marker.addTo(this.map);
     },
   },
-  watch: {
-    /*
-    markersForMap: function (val) {
-      console.log(this.val);
-      this.addMarkerToMap({ lat: val.latitude, lon: val.longitude });
-    },*/
-  },
   created() {},
   mounted() {
+    API.getHuts().then((result) => {
+      console.log(result);
+      this.huts = result;
+      for (let m of this.huts) {
+        L.marker({ lat: m.latitude, lon: m.longitude }).addTo(this.map);
+      }
+    });
     this.icon = L.icon({
       iconUrl: require("/node_modules/leaflet/dist/images/marker-icon.png"),
       iconSize: [26, 40],
@@ -52,7 +54,9 @@ export default {
       [this.latitude, this.longitude],
       this.zoomLevel
     );
-    if (this.setPinOnClick) {
+    console.log(this.setPinOnClick);
+
+    if (this.setPinOnClick == "true") {
       this.map.on("click", (e) => {
         this.emitEvent(e);
         if (this.marker) {
