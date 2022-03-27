@@ -39,7 +39,10 @@ export default {
     huts: function (newVal, oldVal) {
       console.log("Prop changed: ", newVal, " | was: ", oldVal);
       for (let m of this.huts) {
-        L.marker({ lat: m.latitude, lon: m.longitude }).addTo(this.map);
+        L.marker(
+          { lat: m.latitude, lon: m.longitude },
+          { icon: this.icon }
+        ).addTo(this.map);
       }
     },
   },
