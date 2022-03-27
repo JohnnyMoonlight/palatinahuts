@@ -61,13 +61,13 @@
       ><v-row
         ><v-col lg="4" md="4">
           <v-text-field
-            v-model="diameter"
+            v-model="place"
             label="Rieslingschorle (€/0.5L)"
             required
           ></v-text-field></v-col
         ><v-col lg="4" md="4">
           <v-text-field
-            v-model="price"
+            v-model="diameter"
             label="Leberknödeldurchmesser (mm)"
             required
           ></v-text-field></v-col
