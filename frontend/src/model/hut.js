@@ -5,7 +5,7 @@ export default class Hut {
         this.place = place;
         this.diameter = diameter;
         this.playground = playground;
-        this.latidude = latitude;
+        this.latitude = latitude;
         this.longitude = longitude;
         this.active = active;
     }
