@@ -61,7 +61,7 @@
       ><v-row
         ><v-col lg="4" md="4">
           <v-text-field
-            v-model="place"
+            v-model="price"
             label="Rieslingschorle (€/0.5L)"
             required
           ></v-text-field></v-col
