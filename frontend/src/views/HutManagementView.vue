@@ -12,7 +12,7 @@
         </v-col>
 
         <v-col lg="6" md="12">
-          <v-select :items="assocations" label="Manager" required></v-select>
+          <v-select :items="assocations" label="Manager"></v-select>
         </v-col>
         <v-col lg="12" md="12" xs="12" style="height: 50vh">
           <HutMap
@@ -55,13 +55,11 @@
           <v-text-field
             v-model="price"
             label="Rieslingschorle (€/0.5L)"
-            required
           ></v-text-field></v-col
         ><v-col lg="4" md="4">
           <v-text-field
             v-model="diameter"
             label="Leberknödeldurchmesser (mm)"
-            required
           ></v-text-field></v-col
         ><v-col lg="4" md="4">
           <v-switch v-model="playground" label="Spielplatz verfügbar"></v-switch
