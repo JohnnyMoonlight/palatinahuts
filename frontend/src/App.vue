@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-app id="app">
+    <v-app>
       <v-navigation-drawer class="pt-4" app permanent>
         <v-list-item>
           <v-list-item-content>
@@ -25,8 +25,7 @@
           </b-tooltip>
         </div>
       </v-navigation-drawer>
-      <v-main>
-        <div v-for="item in navigationItems" :key="item.text"></div>
+      <v-main id="app-port">
         <router-view />
       </v-main>
     </v-app>
@@ -34,7 +33,7 @@
 </template>
 
 <style lang="scss">
-#app {
+main {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
