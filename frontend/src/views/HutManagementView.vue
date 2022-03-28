@@ -120,8 +120,8 @@ export default {
       images: "",
       latitude: null,
       longitude: null,
-      diameter: "",
-      price: "",
+      diameter: null,
+      price: null,
       playground: false,
       ui: {
         loading: false,
