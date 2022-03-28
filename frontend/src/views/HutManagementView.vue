@@ -39,15 +39,7 @@
             required
             disabled
           ></v-text-field
-        ></v-col>
-        <v-row
-          ><v-col lg="6" md="6">
-            <v-text-field
-              v-model="place"
-              label="Ort"
-              required
-            ></v-text-field></v-col
-        ></v-row> </v-row
+        ></v-col> </v-row
       ><v-row
         ><v-col md="12" xs="12">
           <v-file-input
