@@ -8,6 +8,7 @@
             :counter="80"
             label="Name"
             required
+            :rules="notEmptyRule"
           ></v-text-field>
         </v-col>
 
@@ -55,11 +56,13 @@
           <v-text-field
             v-model="price"
             label="Rieslingschorle (€/0.5L)"
+            :rules="numberRules"
           ></v-text-field></v-col
         ><v-col lg="4" md="4">
           <v-text-field
             v-model="diameter"
             label="Leberknödeldurchmesser (mm)"
+            :rules="numberRules"
           ></v-text-field></v-col
         ><v-col lg="4" md="4">
           <v-switch v-model="playground" label="Spielplatz verfügbar"></v-switch
@@ -125,6 +128,25 @@ export default {
   components: { HutMap },
   mounted() {},
   computed: {
+    numberRules() {
+      const rules = [];
+
+      const periodAsNumberSeparator = function (v) {
+        v != "" ? true : "Bitte Hüttenname angeben";
+      };
+
+      rules.push(periodAsNumberSeparator);
+
+      return rules;
+    },
+    notEmptyRule() {
+      const rules = [];
+      const rule = function (input) {
+        input != "" ? true : "Bitte Hüttenname angeben";
+      };
+      rules.push(rule);
+      return rules;
+    },
     isInvalid() {
       if (
         this.hutName != "" &&
